@@ -320,7 +320,7 @@ class SocksClient(threading.Thread):
                 raise
             logging.debug('Resolving hostname %s', hostname)
             try:
-                ip = socket.getaddrinfo(hostname, port, family=self.__client_ip.family)[0][4][0]
+                ip = socket.getaddrinfo(hostname, port, family=socket.AF_INET if isinstance(self.__client_ip, ipaddress.IPv4Address) else socket.AF_INET6))[0][4][0]
             except socket.gaierror as e:
                 logging.error('Client requests invalid hostname through SOCKS4a: %s', str(e))
                 raise
